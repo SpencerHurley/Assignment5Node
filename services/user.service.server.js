@@ -1,3 +1,5 @@
+var bodyParser = require('body-parser');
+
 module.exports = function (app) {
   app.get('/api/user', findAllUsers);
   app.get('/api/user/:userId', findUserById);
@@ -5,7 +7,7 @@ module.exports = function (app) {
   app.get('/api/profile', profile);
   app.post('/api/logout', logout);
   app.post('/api/login', login);
-  app.put('/api/user/:userId', updateUser);
+  app.put('/api/user', updateUser);
 
   var userModel = require('../models/user/user.model.server');
 
@@ -47,9 +49,10 @@ module.exports = function (app) {
 
   function updateUser(req, res) {
     var user = req.body;
+    console.log(user);
     userModel.updateUser(user)
         .then(function (user) {
-          res.json(user);
+          res.send(user);
         })
   }
 

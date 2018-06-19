@@ -9,8 +9,11 @@ function enrollStudentInSection(enrollment) {
   return enrollmentModel.create(enrollment);
 }
 
-function unenrollStudentInSection(enrollment) {
-  return enrollmentModel.delete(enrollment);
+function unenrollStudentInSection(sectionId, studentId) {
+  console.log("Unenrolling");
+  console.log(sectionId);
+  console.log(studentId);
+  return enrollmentModel.deleteOne({ section: sectionId, student: studentId });
 }
 
 function findSectionsForStudent(studentId) {

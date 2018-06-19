@@ -21,7 +21,6 @@ module.exports = function (app) {
 
   function enrollStudentInSection(req, res) {
     var sectionId = req.params.sectionId;
-    console.log(req.session);
     var currentUser = req.session.currentUser;
     var studentId = currentUser._id;
     var enrollment = {
@@ -44,20 +43,14 @@ module.exports = function (app) {
         var sectionId = req.params.sectionId;
         var currentUser = req.session.currentUser;
         var studentId = currentUser._id;
-        var enrollment = {
-            student: studentId,
-            section: sectionId
-        };
 
         sectionModel
             .incrementSectionSeats(sectionId)
             .then(function () {
                 return enrollmentModel
-                    .unenrollStudentInSection(enrollment)
+                    .unenrollStudentInSection(sectionId, studentId);
             })
-            .then(function (enrollment) {
-                res.json(enrollment);
-            })
+            .then((response) => res.json(response));
     }
 
   function findSectionsForCourse(req, res) {

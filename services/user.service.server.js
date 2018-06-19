@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 module.exports = function (app) {
   app.get('/api/user', findAllUsers);
   app.get('/api/user/:userId', findUserById);
-  app.post('/api/user', createUser);
+  app.post('/api/register', createUser);
   app.get('/api/profile', profile);
   app.post('/api/logout', logout);
   app.post('/api/login', login);
@@ -13,6 +13,7 @@ module.exports = function (app) {
 
   function login(req, res) {
     var credentials = req.body;
+    console.log(credentials);
     userModel
       .findUserByCredentials(credentials)
       .then(function(user) {
@@ -35,7 +36,13 @@ module.exports = function (app) {
   }
 
   function profile(req, res) {
-    res.send(req.session['currentUser']);
+      var credentials = req.body;
+      userModel
+          .findUserByCredentials(credentials)
+          .then(function(user) {
+              req.session['currentUser'] = user;
+              res.json(user);
+          });
   }
 
   function createUser(req, res) {
@@ -52,7 +59,7 @@ module.exports = function (app) {
     console.log(user);
     userModel.updateUser(user)
         .then(function (user) {
-          res.send(user);
+          res.json(user);
         })
   }
 

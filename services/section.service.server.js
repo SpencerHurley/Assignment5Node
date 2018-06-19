@@ -3,7 +3,7 @@ module.exports = function (app) {
 
   app.post('/api/course/:courseId/section', createSection);
   app.get('/api/course/:courseId/section', findSectionsForCourse);
-  app.post('/api/section/:sectionId/enrollment', enrollStudentInSection);
+  app.post('/api/student/:sectionId/enrollment', enrollStudentInSection);
   app.get('/api/student/section', findSectionsForStudent);
   app.delete('/api/section/:sectionId/enrollment', unenrollStudentInSection);
 

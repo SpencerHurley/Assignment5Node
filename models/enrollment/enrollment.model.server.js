@@ -15,7 +15,7 @@ function unenrollStudentInSection(sectionId, studentId) {
           student: studentId,
           section: sectionId
   })
-      .then((enrollment) => console.log(enrollment));
+      .then((enrollment) => {});
 }
 
 function findSectionsForStudent(studentId) {

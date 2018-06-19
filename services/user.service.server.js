@@ -8,6 +8,7 @@ module.exports = function (app) {
   app.post('/api/logout', logout);
   app.post('/api/login', login);
   app.put('/api/user', updateUser);
+  app.delete('/api/profile', deleteUser);
 
   var userModel = require('../models/user/user.model.server');
 
@@ -68,5 +69,11 @@ module.exports = function (app) {
       .then(function (users) {
         res.send(users);
       })
+  }
+
+  function deleteUser(req, res) {
+      var credentials = req.body;
+      userModel.deleteOne({credentials})
+          .then(() => res.json(user))
   }
 }

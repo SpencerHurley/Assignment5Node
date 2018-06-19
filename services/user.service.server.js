@@ -1,5 +1,3 @@
-var bodyParser = require('body-parser');
-
 module.exports = function (app) {
   app.get('/api/user', findAllUsers);
   app.get('/api/user/:userId', findUserById);
@@ -17,7 +15,6 @@ module.exports = function (app) {
     userModel
       .findUserByCredentials(credentials)
       .then(function(user) {
-          console.log(user);
         req.session['currentUser'] = user;
         res.json(user);
       })
@@ -59,7 +56,6 @@ module.exports = function (app) {
 
   function updateUser(req, res) {
     var user = req.body;
-    console.log(user);
     userModel.updateUser(user)
         .then(function (user) {
           res.json(user);

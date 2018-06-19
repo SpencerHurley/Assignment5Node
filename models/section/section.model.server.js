@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var sectionSchema = require('./section.schema.server');
 var sectionModel = mongoose.model('SectionModel', sectionSchema);
+var enrollmentModel = require('../enrollment/enrollment.model.server');
 
 function createSection(section) {
   return sectionModel.create(section);
@@ -26,9 +27,28 @@ function incrementSectionSeats(sectionId) {
     });
 }
 
+function findSectionById(sectionId) {
+    return sectionModel.findOne({_id: sectionId});
+}
+
+function deleteSectionById(sectionId) {
+    return sectionModel.deleteOne({_id: sectionId})
+        .then(() => enrollmentModel.removeEnrollmentsForSection(sectionId));
+}
+
+function updateSectionById(section) {
+    return sectionModel.update({_id: section._id},
+        { $set : {
+            name: section.name, maxSeats : section.maxSeats
+        }})
+}
+
 module.exports = {
   createSection: createSection,
   findSectionsForCourse: findSectionsForCourse,
   decrementSectionSeats: decrementSectionSeats,
-  incrementSectionSeats: incrementSectionSeats
+  incrementSectionSeats: incrementSectionSeats,
+    findSectionById : findSectionById,
+    deleteSectionById : deleteSectionById,
+    updateSectionById : updateSectionById
 };

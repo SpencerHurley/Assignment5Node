@@ -1,11 +1,15 @@
 var mongoose = require('mongoose');
 module.exports = function (app) {
 
+
   app.post('/api/course/:courseId/section', createSection);
   app.get('/api/course/:courseId/section', findSectionsForCourse);
   app.post('/api/student/:sectionId/enrollment', enrollStudentInSection);
   app.get('/api/student/section', findSectionsForStudent);
   app.delete('/api/section/:sectionId/enrollment', unenrollStudentInSection);
+  app.get('/api/section/:sectionId', findSectionById);
+  app.delete('/api/section/:sectionId', deleteSectionById);
+  app.put('/api/section/:sectionId', updateSectionById);
 
   var sectionModel = require('../models/section/section.model.server');
   var enrollmentModel = require('../models/enrollment/enrollment.model.server');
@@ -71,5 +75,25 @@ module.exports = function (app) {
       .then(function (section) {
         res.json(section);
       })
+  }
+
+  function findSectionById(req, res) {
+      var sectionId = req.params.sectionId;
+      sectionModel.findSectionById(sectionId)
+          .then((section) => res.json(section));
+  }
+
+  function deleteSectionById(req, res) {
+      var sectionId = req.params.sectionId;
+      sectionModel.deleteSectionById(sectionId)
+          .then((response) => res.json(response));
+  }
+
+  function updateSectionById(req, res) {
+      var section = req.body;
+      console.log("New Section");
+      console.log(section);
+      sectionModel.updateSectionById(section)
+          .then((response) => res.json(response));
   }
 };

@@ -25,8 +25,13 @@ function findSectionsForStudent(studentId) {
     .exec();
 }
 
+function removeEnrollmentsForSection(sectionId) {
+    return enrollmentModel.deleteMany({section: sectionId})
+}
+
 module.exports = {
   enrollStudentInSection: enrollStudentInSection,
   findSectionsForStudent: findSectionsForStudent,
-    unenrollStudentInSection: unenrollStudentInSection
+    unenrollStudentInSection: unenrollStudentInSection,
+    removeEnrollmentsForSection : removeEnrollmentsForSection
 };

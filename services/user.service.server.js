@@ -14,10 +14,10 @@ module.exports = function (app) {
 
   function login(req, res) {
     var credentials = req.body;
-    console.log(credentials);
     userModel
       .findUserByCredentials(credentials)
       .then(function(user) {
+          console.log(user);
         req.session['currentUser'] = user;
         res.json(user);
       })
@@ -37,10 +37,12 @@ module.exports = function (app) {
   }
 
   function profile(req, res) {
-      var credentials = req.body;
+      var curUser = req.session.currentUser;
       userModel
-          .findUserByCredentials(credentials)
+          .findUserById(curUser._id)
           .then(function(user) {
+              console.log("profile");
+              console.log(user);
               req.session['currentUser'] = user;
               res.json(user);
           });

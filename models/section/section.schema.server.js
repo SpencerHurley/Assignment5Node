@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var sectionSchema = mongoose.Schema({
   name: String,
-  seats: Number,
+  availableSeats: Number,
+    maxSeats: Number,
   courseId: Number,
   students: [String]
 }, {collection: 'section'});

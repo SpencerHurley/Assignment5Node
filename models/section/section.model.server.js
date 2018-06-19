@@ -11,19 +11,19 @@ function findSectionsForCourse(courseId) {
 }
 
 function decrementSectionSeats(sectionId) {
-  return sectionModel.update({
-    _id: sectionId
-  }, {
-    $inc: {availableSeats: -1}
-  });
+      return sectionModel.update({
+            _id: sectionId
+        }, {
+            $inc: {availableSeats: -1}
+        });
 }
 
 function incrementSectionSeats(sectionId) {
-  return sectionModel.update({
-    _id: sectionId
-  }, {
-    $inc: {availableSeats: +1}
-  });
+    return sectionModel.update({
+        _id: sectionId
+    }, {
+        $inc: {availableSeats: 1}
+    });
 }
 
 module.exports = {

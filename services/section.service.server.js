@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 module.exports = function (app) {
 
   app.post('/api/course/:courseId/section', createSection);
@@ -27,6 +28,7 @@ module.exports = function (app) {
       student: studentId,
       section: sectionId
     };
+
 
     sectionModel
       .decrementSectionSeats(sectionId)

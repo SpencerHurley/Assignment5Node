@@ -6,14 +6,16 @@ var enrollmentModel = mongoose.model(
 );
 
 function enrollStudentInSection(enrollment) {
-  return enrollmentModel.create(enrollment);
+  enrollmentModel.create(enrollment);
 }
 
 function unenrollStudentInSection(sectionId, studentId) {
-  console.log("Unenrolling");
-  console.log(sectionId);
-  console.log(studentId);
-  return enrollmentModel.deleteOne({ section: sectionId, student: studentId });
+  enrollmentModel.deleteOne(
+      {
+          student: studentId,
+          section: sectionId
+  })
+      .then((enrollment) => console.log(enrollment));
 }
 
 function findSectionsForStudent(studentId) {
